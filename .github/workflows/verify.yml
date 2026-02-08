@@ -1,0 +1,31 @@
+name: Verify Configuration
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+      
+      - name: Run verification tests
+        run: ./scripts/verify.sh
+      
+      - name: Validate JSON
+        run: jq empty openclaw.json
+      
+      - name: Check script permissions
+        run: |
+          test -x scripts/setup.sh
+          test -x scripts/kill-switch.sh
+          test -x scripts/health-check.sh
+          test -x scripts/verify.sh
