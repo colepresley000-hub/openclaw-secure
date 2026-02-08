@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "version": "1.0.0",
+  "metadata": {
+    "name": "ShieldClaw Hardened Configuration",
+    "description": "Production-ready security configuration for OpenClaw deployments",
+    "last_updated": "2025-02-08"
+  },
+  
+  "security": {
+    "authentication": {
+      "enabled": true,
+      "method": "api_key",
+      "rate_limiting": {
+        "enabled": true,
+        "requests_per_minute": 60,
+        "burst_limit": 10
+      },
+      "ip_whitelist": {
+        "enabled": false,
+        "allowed_ips": []
+      }
+    },
+    
+    "prompt_injection_defense": {
+      "enabled": true,
+      "soul_file": "SOUL.md",
+      "validation_layers": [
+        "input_sanitization",
+        "context_isolation",
+        "output_filtering"
+      ],
+      "blocked_patterns": [
+        "ignore previous instructions",
+        "disregard all previous",
+        "system prompt",
+        "you are now",
+        "new instructions",
+        "forget everything"
+      ],
+      "max_input_length": 4000,
+      "require_structured_output": false
+    },
+    
+    "data_protection": {
+      "pii_detection": true,
+      "pii_redaction": true,
+      "audit_logging": true,
+      "encryption_at_rest": true,
+      "secrets_management": "environment_variables"
+    },
+    
+    "boundaries": {
+      "allowed_tools": [
+        "web_search",
+        "calculator",
+        "code_execution"
+      ],
+      "blocked_tools": [
+        "file_system_write",
+        "network_admin",
+        "system_commands"
+      ],
+      "require_approval": [
+        "external_api_calls",
+        "data_exports"
+      ]
+    }
+  },
+  
+  "operational": {
+    "monitoring": {
+      "health_check_interval": 300,
+      "log_level": "info",
+      "metrics_enabled": true,
+      "alert_on_anomalies": true
+    },
+    
+    "resource_limits": {
+      "max_concurrent_requests": 10,
+      "request_timeout_seconds": 30,
+      "max_tokens_per_request": 4096,
+      "max_context_window": 100000
+    },
+    
+    "failsafe": {
+      "kill_switch_enabled": true,
+      "auto_shutdown_on_breach": true,
+      "emergency_contacts": [],
+      "backup_mode": "read_only"
+    }
+  },
+  
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-sonnet-4-20250514",
+    "temperature": 0.7,
+    "max_tokens": 2048,
+    "system_prompt_file": "SOUL.md"
+  },
+  
+  "compliance": {
+    "gdpr_compliant": true,
+    "data_retention_days": 90,
+    "anonymize_logs": true,
+    "consent_required": true
+  }
+}

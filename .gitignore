@@ -1,0 +1,231 @@
+# ShieldClaw .gitignore
+# Protect sensitive information from being committed
+
+# ============================================================================
+# SECURITY - NEVER COMMIT THESE
+# ============================================================================
+
+# Environment files containing secrets
+.env
+.env.local
+.env.*.local
+.env.production
+.env.staging
+.env.development
+
+# Backup environment files
+.env.*.bak
+.env.killswitch.bak
+
+# Private keys and certificates
+*.key
+*.pem
+*.crt
+*.cer
+*.p12
+*.pfx
+
+# API keys and secrets
+secrets/
+secrets.json
+credentials.json
+
+# Kill switch lock file
+.killswitch.lock
+
+
+# ============================================================================
+# LOGS & DATA
+# ============================================================================
+
+# Log files
+logs/
+*.log
+*.log.*
+
+# Data directories
+data/
+backups/
+tmp/
+temp/
+
+# Incident reports
+incidents/
+incident-*.json
+
+
+# ============================================================================
+# NODE.JS
+# ============================================================================
+
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Package manager files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build output
+dist/
+build/
+out/
+.next/
+
+# Cache
+.npm
+.eslintcache
+.node_repl_history
+.cache/
+
+
+# ============================================================================
+# PYTHON
+# ============================================================================
+
+# Byte-compiled / optimized
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# Distribution / packaging
+*.egg-info/
+dist/
+build/
+
+
+# ============================================================================
+# DATABASES
+# ============================================================================
+
+# SQLite
+*.sqlite
+*.sqlite3
+*.db
+
+# Database dumps
+*.sql
+*.dump
+
+
+# ============================================================================
+# OPERATING SYSTEMS
+# ============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+
+
+# ============================================================================
+# IDEs & EDITORS
+# ============================================================================
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+
+# ============================================================================
+# TESTING
+# ============================================================================
+
+# Test coverage
+coverage/
+.nyc_output/
+*.lcov
+
+# Test results
+test-results/
+junit.xml
+
+
+# ============================================================================
+# DOCKER
+# ============================================================================
+
+# Docker-specific files
+.dockerignore
+
+# Don't ignore Dockerfile though
+!Dockerfile
+
+
+# ============================================================================
+# MISC
+# ============================================================================
+
+# Compressed files (may contain backups)
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.old
+
+
+# ============================================================================
+# KEEP THESE FILES
+# ============================================================================
+
+# Configuration templates (safe to commit)
+!.env.example
+!config.example.json
+
+# Scripts
+!scripts/
+
+# Documentation
+!README.md
+!SOUL.md
+!docs/
+
+# License
+!LICENSE
