@@ -227,7 +227,20 @@ watch -n 60 ./scripts/health-check.sh --quick
 # Implement with your monitoring solution
 # Log format: timestamp, user, action, tokens, status
 ```
+## 🔒 Premium: ShieldClaw Monitor
 
+Need 24/7 runtime security monitoring? **[ShieldClaw Monitor](pro/README.md)** adds:
+
+- ⚡ **24/7 Monitoring Daemon** - Continuous runtime protection
+- 🔍 **Automated Drift Detection** - Catch unauthorized changes instantly  
+- 🚨 **Real-time Alerts** - Email, Slack, Discord, SMS notifications
+- 📊 **Web Dashboard** - Beautiful monitoring interface
+- 🛡️ **Security Audits** - Scheduled compliance checks
+- 💰 **Starting at $79/month** - 14-day free trial
+
+**[View Features →](pro/README.md)** | **[See Pricing →](https://shieldclaw.xyz/pricing)** | **[Start Free Trial →](https://shieldclaw.xyz/pricing)**
+
+---
 ## 🔒 Security Features
 
 ### Prompt Injection Defense
