@@ -1,0 +1,21 @@
+# ShieldClaw Monitor Requirements
+
+# Core dependencies
+python-dotenv==1.0.0
+
+# Alerts & notifications
+requests==2.31.0
+twilio==8.10.0
+
+# Stripe payment processing
+stripe==7.6.0
+
+# Database (optional PostgreSQL support)
+psycopg2-binary==2.9.9
+
+# Development dependencies
+pytest==7.4.3
+pytest-cov==4.1.0
+black==23.12.1
+flake8==6.1.0
+mypy==1.7.1

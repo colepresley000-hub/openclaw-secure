@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShieldClaw Monitor - Premium Runtime Security</title>
+    <meta name="description" content="24/7 runtime monitoring and security for OpenClaw deployments. Detect drift, prevent attacks, ensure compliance.">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .comparison {
+            padding: 80px 20px;
+            background: #f9fafb;
+        }
+
+        .comparison h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #1f2937;
+        }
+
+        .comparison-subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            color: #6b7280;
+            margin-bottom: 60px;
+        }
+
+        .tier-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .tier-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            border: 2px solid #e5e7eb;
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .tier-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .tier-card.featured {
+            border-color: #7c3aed;
+            box-shadow: 0 8px 16px rgba(124, 58, 237, 0.2);
+        }
+
+        .tier-badge {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: #7c3aed;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .tier-name {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #1f2937;
+        }
+
+        .tier-price {
+            font-size: 3em;
+            font-weight: 800;
+            color: #7c3aed;
+            margin-bottom: 10px;
+        }
+
+        .tier-price.free {
+            color: #10b981;
+        }
+
+        .tier-period {
+            color: #6b7280;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        .tier-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .tier-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f3f4f6;
+            display: flex;
+            align-items: start;
+            gap: 10px;
+        }
+
+        .tier-features li:last-child {
+            border-bottom: none;
+        }
+
+        .tier-features li::before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+
+        .tier-features li.unavailable::before {
+            content: "–";
+            color: #d1d5db;
+        }
+
+        .tier-button {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: #7c3aed;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .tier-button:hover {
+            background: #6d28d9;
+        }
+
+        .tier-button.secondary {
+            background: white;
+            color: #7c3aed;
+            border: 2px solid #7c3aed;
+        }
+
+        .tier-button.secondary:hover {
+            background: #f5f3ff;
+        }
+
+        .features-comparison {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .feature-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 40px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        }
+
+        .feature-table th {
+            background: #f9fafb;
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .feature-table td {
+            padding: 20px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .feature-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .check {
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .cross {
+            color: #d1d5db;
+            font-size: 1.3em;
+        }
+
+        .cta {
+            background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 40px;
+            background: white;
+            color: #7c3aed;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+
+        .faq {
+            padding: 80px 20px;
+            background: #f9fafb;
+        }
+
+        .faq h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 60px;
+        }
+
+        .faq-item {
+            background: white;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-question {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1f2937;
+        }
+
+        .faq-answer {
+            color: #6b7280;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2em;
+            }
+
+            .tier-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-table {
+                font-size: 0.9em;
+            }
+
+            .feature-table th, .feature-table td {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>🛡️ ShieldClaw Monitor</h1>
+        <p>24/7 runtime security monitoring for your OpenClaw deployments. Detect drift, prevent attacks, ensure compliance.</p>
+    </section>
+
+    <!-- Pricing Tiers -->
+    <section class="comparison">
+        <div class="container">
+            <h2>Choose Your Protection Level</h2>
+            <p class="comparison-subtitle">Start free, upgrade when you need more firepower</p>
+
+            <div class="tier-grid">
+                <!-- Free Tier -->
+                <div class="tier-card">
+                    <div class="tier-name">ShieldClaw</div>
+                    <div class="tier-price free">$0</div>
+                    <div class="tier-period">Forever Free • Open Source</div>
+                    
+                    <ul class="tier-features">
+                        <li>Hardened configuration templates</li>
+                        <li>Prompt injection defense (SOUL.md)</li>
+                        <li>Interactive setup wizard</li>
+                        <li>Emergency kill switch</li>
+                        <li>Manual health checks</li>
+                        <li>Security audit scripts</li>
+                        <li>Community support</li>
+                        <li class="unavailable">Real-time monitoring</li>
+                        <li class="unavailable">Automated drift detection</li>
+                        <li class="unavailable">Alert notifications</li>
+                    </ul>
+
+                    <a href="https://github.com/colepresley000-hub/openclaw-secure" class="tier-button secondary">
+                        Get Started Free
+                    </a>
+                </div>
+
+                <!-- Monitor Tier -->
+                <div class="tier-card featured">
+                    <span class="tier-badge">Most Popular</span>
+                    <div class="tier-name">Monitor</div>
+                    <div class="tier-price">$79</div>
+                    <div class="tier-period">per month</div>
+                    
+                    <ul class="tier-features">
+                        <li>Everything in Free</li>
+                        <li>24/7 runtime monitoring daemon</li>
+                        <li>Automated drift detection</li>
+                        <li>Security audit scheduler</li>
+                        <li>CVE vulnerability alerts</li>
+                        <li>Web monitoring dashboard</li>
+                        <li>Email + Slack + Discord alerts</li>
+                        <li>5 deployments</li>
+                        <li>10,000 API calls/day</li>
+                        <li>30-day event history</li>
+                        <li>Priority email support</li>
+                    </ul>
+
+                    <a href="#get-started" class="tier-button">
+                        Start 14-Day Free Trial
+                    </a>
+                </div>
+
+                <!-- Enterprise Tier -->
+                <div class="tier-card">
+                    <div class="tier-name">Enterprise</div>
+                    <div class="tier-price">Custom</div>
+                    <div class="tier-period">Contact for pricing</div>
+                    
+                    <ul class="tier-features">
+                        <li>Everything in Monitor</li>
+                        <li>Unlimited deployments</li>
+                        <li>Unlimited API calls</li>
+                        <li>Custom integrations</li>
+                        <li>SOC2/HIPAA compliance package</li>
+                        <li>White-label dashboard</li>
+                        <li>SSO/SAML integration</li>
+                        <li>Dedicated account manager</li>
+                        <li>24/7 phone support</li>
+                        <li>99.9% SLA guarantee</li>
+                        <li>On-premise deployment option</li>
+                    </ul>
+
+                    <a href="/cdn-cgi/l/email-protection#a9ccc7ddccdbd9dbc0dacce9dac1c0ccc5cdcac5c8de87d1d0d3" class="tier-button secondary">
+                        Contact Sales
+                    </a>
+                </div>
+            </div>
+
+            <p style="text-align: center; color: #6b7280; margin-top: 40px;">
+                💳 All plans include 14-day free trial • No credit card required • Cancel anytime
+            </p>
+        </div>
+    </section>
+
+    <!-- Feature Comparison Table -->
+    <section class="features-comparison">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 20px;">Full Feature Comparison</h2>
+            <p style="text-align: center; color: #6b7280; margin-bottom: 40px;">
+                See what's included in each plan
+            </p>
+
+            <table class="feature-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th style="text-align: center;">Free</th>
+                        <th style="text-align: center;">Monitor</th>
+                        <th style="text-align: center;">Enterprise</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Core Security</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Configuration hardening</td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Prompt injection defense</td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Emergency kill switch</td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Monitoring</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>24/7 runtime monitoring</td>
+                        <td style="text-align: center;"><span class="cross">–</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Automated drift detection</td>
+                        <td style="text-align: center;"><span class="cross">–</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>CVE vulnerability alerts</td>
+                        <td style="text-align: center;"><span class="cross">–</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Web dashboard</td>
+                        <td style="text-align: center;"><span class="cross">–</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Alerts & Notifications</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Email alerts</td>
+                        <td style="text-align: center;"><span class="cross">–</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Slack integration</td>
+                        <td style="text-align: center;"><span class="cross">–</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Discord integration</td>
+                        <td style="text-align: center;"><span class="cross">–</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>SMS alerts (critical only)</td>
+                        <td style="text-align: center;"><span class="cross">–</span></td>
+                        <td style="text-align: center;"><span class="cross">–</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Limits</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Deployments monitored</td>
+                        <td style="text-align: center;">Unlimited</td>
+                        <td style="text-align: center;">5</td>
+                        <td style="text-align: center;">Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td>API calls per day</td>
+                        <td style="text-align: center;">–</td>
+                        <td style="text-align: center;">10,000</td>
+                        <td style="text-align: center;">Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td>Event history retention</td>
+                        <td style="text-align: center;">–</td>
+                        <td style="text-align: center;">30 days</td>
+                        <td style="text-align: center;">90 days+</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Support</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Community support</td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Email support</td>
+                        <td style="text-align: center;"><span class="cross">–</span></td>
+                        <td style="text-align: center;">Priority</td>
+                        <td style="text-align: center;">24/7</td>
+                    </tr>
+                    <tr>
+                        <td>Dedicated account manager</td>
+                        <td style="text-align: center;"><span class="cross">–</span></td>
+                        <td style="text-align: center;"><span class="cross">–</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>SLA guarantee</td>
+                        <td style="text-align: center;"><span class="cross">–</span></td>
+                        <td style="text-align: center;"><span class="cross">–</span></td>
+                        <td style="text-align: center;">99.9%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">What's the difference between ShieldClaw (free) and Monitor?</div>
+                <div class="faq-answer">
+                    ShieldClaw (free) provides deployment-time security with configuration templates, setup scripts, and manual tools. ShieldClaw Monitor adds 24/7 runtime monitoring, automated drift detection, real-time alerts, and a web dashboard to continuously protect your production deployments.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Do I need to use the free version before Monitor?</div>
+                <div class="faq-answer">
+                    Yes! ShieldClaw Monitor builds on top of the free ShieldClaw toolkit. You'll first deploy using the free setup wizard and configuration templates, then add Monitor for continuous protection.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Can I try Monitor before paying?</div>
+                <div class="faq-answer">
+                    Absolutely! All paid plans include a 14-day free trial with no credit card required. You'll get full access to all Monitor features during the trial.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Is my data secure?</div>
+                <div class="faq-answer">
+                    Yes. Monitor runs on your infrastructure as a daemon and only sends anonymized metrics for dashboard display. We never see your configuration files, API keys, or sensitive data. Enterprise customers can opt for completely on-premise deployment.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What payment methods do you accept?</div>
+                <div class="faq-answer">
+                    We accept all major credit cards (Visa, Mastercard, Amex) via Stripe. Enterprise customers can pay via invoice/bank transfer with annual contracts.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Can I cancel anytime?</div>
+                <div class="faq-answer">
+                    Yes! You can cancel your Monitor subscription at any time. You'll retain access until the end of your billing period. No questions asked, no cancellation fees.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Do you offer discounts for startups or nonprofits?</div>
+                <div class="faq-answer">
+                    Yes! YC-backed startups get 50% off Monitor for 12 months. Nonprofits get 30% off. Contact us with proof of status to claim your discount.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" id="get-started">
+        <div class="container">
+            <h2>Ready to Secure Your OpenClaw Deployment?</h2>
+            <p>Start with our free toolkit, upgrade to Monitor when you need more protection.</p>
+            <a href="https://github.com/colepresley000-hub/openclaw-secure" class="cta-button">
+                Get Started Free →
+            </a
