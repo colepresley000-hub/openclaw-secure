@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShieldClaw Monitor Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-healthy { background: #10b981; color: white; }
+        .status-warning { background: #f59e0b; color: white; }
+        .status-critical { background: #ef4444; color: white; }
+        .status-degraded { background: #f59e0b; color: white; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid #334155;
+        }
+
+        .card h2 {
+            color: #60a5fa;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #334155;
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            color: #94a3b8;
+            font-size: 0.95em;
+        }
+
+        .metric-value {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #60a5fa;
+        }
+
+        .metric-value.warning {
+            color: #fbbf24;
+        }
+
+        .metric-value.critical {
+            color: #ef4444;
+        }
+
+        .event-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .event {
+            background: #0f172a;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #60a5fa;
+        }
+
+        .event.warning {
+            border-left-color: #fbbf24;
+        }
+
+        .event.critical {
+            border-left-color: #ef4444;
+        }
+
+        .event-time {
+            font-size: 0.85em;
+            color: #64748b;
+            margin-bottom: 5px;
+        }
+
+        .event-message {
+            color: #e2e8f0;
+            margin-bottom: 8px;
+        }
+
+        .event-type {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #1e293b;
+            border-radius: 4px;
+            font-size: 0.8em;
+            color: #94a3b8;
+        }
+
+        .drift-item {
+            background: #0f172a;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #fbbf24;
+        }
+
+        .drift-file {
+            font-weight: 600;
+            color: #fbbf24;
+            margin-bottom: 8px;
+        }
+
+        .drift-changes {
+            font-size: 0.9em;
+            color: #94a3b8;
+        }
+
+        .health-check {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #334155;
+        }
+
+        .health-check:last-child {
+            border-bottom: none;
+        }
+
+        .check-status {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .check-pass { background: #10b981; }
+        .check-fail { background: #ef4444; }
+        .check-warn { background: #f59e0b; }
+
+        .refresh-info {
+            text-align: center;
+            color: #64748b;
+            font-size: 0.9em;
+            margin-top: 20px;
+            padding: 15px;
+            background: #1e293b;
+            border-radius: 8px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>
+                🛡️ ShieldClaw Monitor
+                <span id="status-badge" class="status-badge status-healthy">Loading...</span>
+            </h1>
+            <p>Real-time security monitoring for OpenClaw</p>
+        </header>
+
+        <div class="grid">
+            <!-- System Health -->
+            <div class="card">
+                <h2>🏥 System Health</h2>
+                <div id="health-checks" class="loading pulse">
+                    Loading health data...
+                </div>
+            </div>
+
+            <!-- API Metrics -->
+            <div class="card">
+                <h2>📊 API Metrics (24h)</h2>
+                <div id="api-metrics">
+                    <div class="metric">
+                        <span class="metric-label">Total Requests</span>
+                        <span class="metric-value" id="total-requests">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Avg Response Time</span>
+                        <span class="metric-value" id="avg-response">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Total Tokens</span>
+                        <span class="metric-value" id="total-tokens">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Suspicious Requests</span>
+                        <span class="metric-value critical" id="suspicious-requests">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drift Alerts -->
+            <div class="card">
+                <h2>⚠️ Configuration Drift</h2>
+                <div id="drift-alerts">
+                    <div class="metric">
+                        <span class="metric-label">Unacknowledged Drifts</span>
+                        <span class="metric-value warning" id="drift-count">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Security Events -->
+        <div class="card" style="margin-bottom: 30px;">
+            <h2>🔔 Recent Security Events</h2>
+            <div id="events-list" class="event-list loading pulse">
+                Loading events...
+            </div>
+        </div>
+
+        <div class="refresh-info">
+            Last updated: <span id="last-update">Never</span> • Auto-refresh every 30 seconds
+        </div>
+    </div>
+
+    <script>
+        // Fetch and display metrics
+        async function loadMetrics() {
+            try {
+                const response = await fetch('metrics.json');
+                const data = await response.json();
+
+                // Update status badge
+                const status = data.health.status;
+                const statusBadge = document.getElementById('status-badge');
+                statusBadge.textContent = status.toUpperCase();
+                statusBadge.className = `status-badge status-${status}`;
+
+                // Update health checks
+                const healthChecks = document.getElementById('health-checks');
+                healthChecks.innerHTML = '';
+                healthChecks.className = '';
+
+                for (const [check, value] of Object.entries(data.health.checks)) {
+                    const checkDiv = document.createElement('div');
+                    checkDiv.className = 'health-check';
+                    
+                    let statusClass = 'check-pass';
+                    let displayValue = value;
+                    
+                    if (check === 'unresolved_alerts') {
+                        statusClass = value > 10 ? 'check-fail' : value > 0 ? 'check-warn' : 'check-pass';
+                        displayValue = `${value} alerts`;
+                    } else if (typeof value === 'boolean') {
+                        statusClass = value ? 'check-pass' : 'check-fail';
+                        displayValue = value ? 'OK' : 'FAIL';
+                    }
+                    
+                    checkDiv.innerHTML = `
+                        <span><span class="check-status ${statusClass}"></span>${check.replace(/_/g, ' ')}</span>
+                        <span>${displayValue}</span>
+                    `;
+                    healthChecks.appendChild(checkDiv);
+                }
+
+                // Update API metrics
+                document.getElementById('total-requests').textContent = data.api.total_requests.toLocaleString();
+                document.getElementById('avg-response').textContent = data.api.avg_response_time.toFixed(2) + 'ms';
+                document.getElementById('total-tokens').textContent = data.api.total_tokens.toLocaleString();
+                document.getElementById('suspicious-requests').textContent = data.api.suspicious_requests;
+
+                // Update drift count
+                document.getElementById('drift-count').textContent = data.drift.unacknowledged;
+
+                // Update events list
+                const eventsList = document.getElementById('events-list');
+                eventsList.innerHTML = '';
+                eventsList.className = 'event-list';
+
+                if (data.events.recent.length === 0) {
+                    eventsList.innerHTML = '<div class="loading">No recent events</div>';
+                } else {
+                    data.events.recent.forEach(event => {
+                        const eventDiv = document.createElement('div');
+                        eventDiv.className = `event ${event.severity}`;
+                        eventDiv.innerHTML = `
+                            <div class="event-time">${new Date().toLocaleString()}</div>
+                            <div class="event-message">${event.type.replace(/_/g, ' ')}: ${event.count} occurrence(s)</div>
+                            <span class="event-type">${event.severity}</span>
+                        `;
+                        eventsList.appendChild(eventDiv);
+                    });
+                }
+
+                // Update last update time
+                document.getElementById('last-update').textContent = new Date().toLocaleTimeString();
+
+            } catch (error) {
+                console.error('Error loading metrics:', error);
+                document.getElementById('health-checks').innerHTML = '<div class="loading">Error loading data</div>';
+            }
+        }
+
+        // Initial load
+        loadMetrics();
+
+        // Auto-refresh every 30 seconds
+        setInterval(loadMetrics, 30000);
+    </script>
+</body>
+</html>
